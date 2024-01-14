@@ -8,7 +8,7 @@ import {
 function Page() {
   return (
     <div className="flex flex-col text-white justify-center items-center h-screen px-2">
-      <h1 className="text-5xl font-bold mb-20">Neuro Nexa</h1>
+      <h1 className="text-5xl font-bold mb-20">NeuroNexa</h1>
       <div className="flex space-x-2 text-center">
         <div>
           {/* first */}
