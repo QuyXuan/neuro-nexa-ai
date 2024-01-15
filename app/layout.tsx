@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "../node_modules/highlight.js/styles/night-owl.css";
 import SideBar from "@/components/SideBar";
 import { SessionProvider } from "@/components/SessionProvider";
 import { getServerSession } from "next-auth";
