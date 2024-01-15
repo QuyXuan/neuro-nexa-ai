@@ -10,7 +10,6 @@ function Message({ message }: Props) {
   const isChatBotRender = message.user.name === "NeuroNexa";
 
   const extractCodeBlocks = (text: string) => {
-    console.log(text);
     const regex = /(?:```([\s\S]*?)```|`([^`]+)`|([^`]+))/g;
     let match;
     let result = [];
@@ -61,7 +60,7 @@ function Message({ message }: Props) {
 
   return (
     <div className={`py-5 text-white ${isChatBotRender && "bg-[#434654]"}`}>
-      <div className="flex space-x-5 px-10 max-w-3xl mx-auto">
+      <div className="flex space-x-5 max-w-4xl mx-auto">
         <Image
           src={`${
             isChatBotRender

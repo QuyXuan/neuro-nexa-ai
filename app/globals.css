@@ -35,4 +35,26 @@ body {
   .chatRow:hover {
     @apply bg-gray-700/70;
   }
+
+  .custom-scroll {
+    scroll-behavior: smooth
+  }
+
+  .custom-scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #eff1f2
+  }
+
+  .custom-scroll::-webkit-scrollbar {
+    width: 5px
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #43475180
+  }
+
+  .custom-scroll.x-scroll {
+    background-color: #011627
+  }
+
 }

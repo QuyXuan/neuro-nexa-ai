@@ -15,18 +15,19 @@ type Props = {
 function ChatInput({ chatId }: Props) {
   const [prompt, setPrompt] = useState("");
   const { data: session } = useSession();
-  const router = useRouter();
   const model = "gpt-3.5-turbo";
 
-  const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const sendMessage = async () => {
     if (!prompt) return;
 
     const input = prompt.trim();
     setPrompt("");
 
     const message: Message = {
-      text: input,
+      text: input
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;"),
       createdAt: serverTimestamp(),
       user: {
         _id: session?.user?.email!,
@@ -63,25 +64,41 @@ function ChatInput({ chatId }: Props) {
   };
 
   return (
-    <div className="bg-gray-700/50 text-gray-400 rounded-lg text-sm">
-      <form onSubmit={sendMessage} className="p-5 space-x-5 flex">
-        <input
-          className="bg-transparent focus:outline-none flex-1 disabled:cursor-not-allowed disabled:text-gray-300"
-          disabled={!session}
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          type="text"
-          placeholder="Type your message here..."
-        />
-        <button
-          disabled={!prompt || !session}
-          className="bg-[#11A37F] hover:opacity-50 text-white font-bold px-4 py-2 rounded disabled:bg-gray-300 disabled:cursor-not-allowed"
-          type="submit"
-        >
-          <PaperAirplaneIcon className="h-4 w-4 -rotate-45" />
-        </button>
+    <div className="w-full pt-2 md:pt-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:w-[calc(100%-.5rem)]">
+      <form
+        onSubmit={sendMessage}
+        className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl"
+      >
+        <div className="relative flex h-full flex-1 items-stretch md:flex-col">
+          <div className="flex w-full items-center">
+            <div className="overflow-hidden [&:has(textarea:focus)]:border-token-border-xheavy [&:has(textarea:focus)]:shadow-[0_2px_6px_rgba(0,0,0,.05)] flex flex-col w-full dark:border-token-border-heavy flex-grow relative border border-token-border-heavy dark:text-white rounded-2xl bg-white dark:bg-gray-800 shadow-[0_0_0_2px_rgba(255,255,255,0.95)] dark:shadow-[0_0_0_2px_rgba(52,53,65,0.95)]">
+              <textarea
+                className="m-0 w-full resize-none border-0 bg-transparent py-[10px] pr-10 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:py-3.5 md:pr-12 placeholder-black/50 dark:placeholder-white/50 pl-3 md:pl-4 max-h-[200px] h-[52px] overflow-y-hidden"
+                placeholder="Type your prompt here..."
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                  }
+                }}
+              ></textarea>
+              <button
+                disabled={!prompt || !session}
+                className={`absolute md:bottom-3 md:right-3 dark:hover:bg-gray-900 ${
+                  !prompt || !session
+                    ? "dark:disabled:bg-transparent disabled:bg-black disabled:opacity-10 disabled:text-gray-400"
+                    : "enabled:bg-black text-white"
+                } p-0.5 border border-black rounded-lg dark:border-white dark:bg-white bottom-1.5 transition-colors`}
+                type="submit"
+              >
+                <PaperAirplaneIcon className="h-5 w-5 -rotate-45" />
+              </button>
+            </div>
+          </div>
+        </div>
       </form>
-      <div>{/* Model selection */}</div>
     </div>
   );
 }

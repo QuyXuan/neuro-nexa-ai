@@ -29,7 +29,7 @@ function Chat({ chatId }: Props) {
   );
 
   return (
-    <div className="flex-1 overflow-y-auto overflow-x-hidden">
+    <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scroll">
       {messages?.empty && (
         <div className="h-[calc(100vh-72px)] flex flex-col items-center justify-center text-center gap-8">
           <Image

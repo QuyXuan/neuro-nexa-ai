@@ -9,7 +9,6 @@ type Data = {
 };
 
 export async function POST(req: Request, res: NextApiResponse) {
-  console.log("askQuestion");
   const request = await req.json();
   if (!request.prompt) {
     res.status(400).json({ answer: "Please provide a prompt!" });
@@ -21,9 +20,7 @@ export async function POST(req: Request, res: NextApiResponse) {
     return;
   }
 
-  console.log("response");
   const response = await query(request.prompt, request.chatId, request.model);
-  console.log(response);
 
   const message: Message = {
     text: response || "NeuroNexa was unable to find an answer for that!",
