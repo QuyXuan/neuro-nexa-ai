@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Message from "./Message";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 type Props = {
   chatId: string;
@@ -13,6 +14,8 @@ type Props = {
 
 function Chat({ chatId }: Props) {
   const { data: session } = useSession();
+  const messageRef = useRef<HTMLDivElement>(null);
+
   const [messages] = useCollection(
     session &&
       query(
@@ -27,6 +30,10 @@ function Chat({ chatId }: Props) {
         orderBy("createdAt", "asc")
       )
   );
+
+  useEffect(() => {
+    messageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scroll">
@@ -47,6 +54,7 @@ function Chat({ chatId }: Props) {
       {messages?.docs.map((message) => (
         <Message key={message.id} message={message.data()} />
       ))}
+      <div ref={messageRef} />
     </div>
   );
 }

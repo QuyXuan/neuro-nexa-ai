@@ -5,9 +5,9 @@ import "../node_modules/highlight.js/styles/night-owl.css";
 import SideBar from "@/components/SideBar";
 import { SessionProvider } from "@/components/SessionProvider";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import Login from "@/components/Login";
 import ClientProvider from "@/components/ClientProvider";
+import { authOptions } from "./api/googleAuthOptions/authOptions";
 
 const inter = Inter({ subsets: ["latin"] });
 

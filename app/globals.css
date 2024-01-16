@@ -37,7 +37,7 @@ body {
   }
 
   .custom-scroll {
-    scroll-behavior: smooth
+    @apply scroll-smooth;
   }
 
   .custom-scroll::-webkit-scrollbar-track {
@@ -45,16 +45,23 @@ body {
   }
 
   .custom-scroll::-webkit-scrollbar {
-    width: 5px
+    @apply w-[5px];
   }
 
   .custom-scroll::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #43475180
+    @apply rounded-[10px] bg-[#43475180];
   }
 
   .custom-scroll.x-scroll {
-    background-color: #011627
+    @apply bg-[#011627] overflow-x-auto;
+  }
+
+  .custom-scroll.x-scroll::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scroll.x-scroll::-webkit-scrollbar {
+    @apply h-[5px];
   }
 
 }

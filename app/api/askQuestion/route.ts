@@ -1,5 +1,5 @@
 import query from "@/lib/queryApi";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiResponse } from "next";
 import admin from "firebase-admin";
 import { adminDb } from "@/firebaseAdmin";
 import { NextResponse } from "next/server";

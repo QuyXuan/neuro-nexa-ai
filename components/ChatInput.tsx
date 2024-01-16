@@ -4,8 +4,7 @@ import { db } from "@/firebase";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -16,6 +15,7 @@ function ChatInput({ chatId }: Props) {
   const [prompt, setPrompt] = useState("");
   const { data: session } = useSession();
   const model = "gpt-3.5-turbo";
+  const today = serverTimestamp();
 
   const sendMessage = async () => {
     if (!prompt) return;
@@ -28,7 +28,7 @@ function ChatInput({ chatId }: Props) {
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;"),
-      createdAt: serverTimestamp(),
+      createdAt: today,
       user: {
         _id: session?.user?.email!,
         name: session?.user?.name!,
@@ -67,7 +67,7 @@ function ChatInput({ chatId }: Props) {
     <div className="w-full pt-2 md:pt-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:w-[calc(100%-.5rem)]">
       <form
         onSubmit={sendMessage}
-        className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl"
+        className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 lg:mx-auto lg:max-w-2xl xl:max-w-4xl"
       >
         <div className="relative flex h-full flex-1 items-stretch md:flex-col">
           <div className="flex w-full items-center">
